@@ -1,4 +1,4 @@
-name: Build React App
+name: Build CRA App
 
 on:
   push:
@@ -11,10 +11,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
+      - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Setup Node
+      - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 20
@@ -22,16 +22,12 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Build project
-        run: npm run build
-
-      - name: Package project as tar.xz
+      - name: Create tar.xz package
         run: |
-          cd ..
-          tar -cvJf react-app.tar.xz react-app
+          tar -cvJf node_modules.tar.xz node_modules
 
-      - name: Upload artifact
+      - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
-          name: react-app
-          path: ./react-app.tar.xz
+          name: react-build
+          path: ./node_modules.tar.xz
